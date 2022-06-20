@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="css/style.css">
+
+        <style type="text/css">
+            .center {
+                text-align: center;
+                padding-top: 10px 0;
+            }
+
+            body {
+                background: yellow;
+                background-size: 400% 400%;
+                animation: gradient 20s ease infinite;
+                height: 100vh;
+            }
+
+            @keyframes gradient {
+                100% {
+                    background-position: 100% 100%;
+                }
+                100% {
+                    background-position: 100% 100%;
+                }
+                100% {
+                    background-position: 100% 100%;
+                }
+            }
+
+            form {
+                font-size: large;
+            }
+
+            input {
+                width: 300px;
+                height: 80px;
+                font-size: xx-large;
+                margin: auto;
+                position: relative;
+                text-align: center;
+            }
+            h1 {
+               padding-top: 10px;
+               text-align: center;
+               font-size: 70px;
+               color: black;
+               font-family: Georgia, serif;
+               font-style: italic;
+            }
+
+            #submit {
+                background-color: blue;
+                color: white;
+            }
+
+            .done {
+                color: green;
+            }
+
+            .notdone {
+                color: grey;
+            }
+
+            button {
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+            }
+            .complete {
+                font: bold 11px Arial;
+                text-decoration: none;
+                background-color: green;
+                color: #333333;
+                padding: 2px 6px 2px 6px;
+                border-top: 1px solid #CCCCCC;
+                border-right: 1px solid #333333;
+                border-bottom: 1px solid #333333;
+                border-left: 1px solid #CCCCCC;
+            }
+
+            .incomplete {
+                font: bold 11px Arial;
+                text-decoration: none;
+                background-color: grey;
+                color: #333333;
+                padding: 2px 6px 2px 6px;
+                border-top: 1px solid #CCCCCC;
+                border-right: 1px solid #333333;
+                border-bottom: 1px solid #333333;
+                border-left: 1px solid #CCCCCC;
+            }
+
+            .delete {
+                font: bold 11px Arial;
+                text-decoration: none;
+                background-color: red;
+                color: #333333;
+                padding: 2px 6px 2px 6px;
+                border-top: 1px solid #CCCCCC;
+                border-right: 1px solid #333333;
+                border-bottom: 1px solid #333333;
+                border-left: 1px solid #CCCCCC;
+            }
+
+            .span1 {
+                display: inline-block;
+                padding-left: 5px;
+            }
+
+            .span2 {
+                display: inline-block;
+                padding-left: 20px;
+            }
+        </style>
+
+        <title>To-Do List App</title>
+    </head>
+
+    <h1>
+        {{ date }} Things To-Do
+    </h1>
+
+    <body>
+        <div>
+            <div class="center">
+                <form id="insert" action="{{ url_for('insert') }}" method="POST">
+                    <input type="text" name="thing" placeholder="Enter To-Do" required><br><br>
+                    <input id="submit" type="submit" onsubmit="validateTicker()" value="Add">
+                </form>
+            </div>
+        </div>
+
+        <br><br>
+
+        <div class="center">
+            {% for thing in things %}
+                <div class="center">
+                    {% if thing.completed == True %}
+                        <span class="span1">
+                            <h3 class="done">{{ thing.id }}.</h3>
+                        </span>
+
+                        <span class="span1">
+                            <h3 class="done">{{ thing.thing }}</h3>
+                        </span>
+
+                        <span class="span2">
+                            <a href="/update/{{ thing.id }}" class="incomplete">Redo Task</a>
+                        </span>
+                    {% else %}
+                        <span class="span1">
+                            <h3 class="notdone">{{ thing.id }}.</h3>
+                        </span>
+
+                        <span class="span1">
+                            <h3 class="notdone">{{ thing.thing }}</h3>
+                        </span>
+
+                        <span class="span2">
+                            <a href="/update/{{ thing.id }}" class="complete">Complete Task</a>
+                        </span>
+                    {% endif %}
+
+                    <span class="span2">
+                        <a href="/delete/{{ thing.id }}" class="delete" >Delete</a>
+                    </span>
+                </div>
+                <br>
+            {% endfor %}
+        </div>
+    </body>
+</html>
